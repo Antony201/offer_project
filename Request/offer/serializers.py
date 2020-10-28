@@ -32,7 +32,7 @@ class OfferDetailSerializer(BaseOfferClass, serializers.ModelSerializer):
 
     class Meta:
         model = Offer
-        fields = ("id", "text", "date", "client", "responsible", "client_info")
+        fields = ("id", "text", "date", "responsible", "client", "client_info")
 
 
 class OfferCreateSerializer(BaseOfferClass, serializers.ModelSerializer):
