@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Offer, Client, Responsible
 
 
-class BaseOfferClass():
+class BaseOfferSerializer(serializers.Serializer):
     date = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)
 
 
@@ -18,7 +18,8 @@ class ClientCreateSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class OfferListSerializer(BaseOfferClass, serializers.ModelSerializer):
+
+class OfferListSerializer(serializers.ModelSerializer, BaseOfferSerializer):
     client = ClientCreateSerializer()
     responsible = ResponsibleCreateSerializer()
 
@@ -27,15 +28,16 @@ class OfferListSerializer(BaseOfferClass, serializers.ModelSerializer):
         fields = ("id", "text", "date", "responsible", "client")
 
 
-class OfferDetailSerializer(BaseOfferClass, serializers.ModelSerializer):
+class OfferDetailSerializer(serializers.ModelSerializer, BaseOfferSerializer):
     client_info = ClientCreateSerializer(source="client", read_only=True)
+
 
     class Meta:
         model = Offer
         fields = ("id", "text", "date", "responsible", "client", "client_info")
 
 
-class OfferCreateSerializer(BaseOfferClass, serializers.ModelSerializer):
+class OfferCreateSerializer(serializers.ModelSerializer, BaseOfferSerializer):
     client_info = ClientCreateSerializer(source="client", read_only=True)
 
     class Meta:
