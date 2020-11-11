@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from .models import Offer, Client, Responsible
 
 
@@ -30,7 +31,6 @@ class OfferListSerializer(serializers.ModelSerializer, BaseOfferSerializer):
 
 class OfferDetailSerializer(serializers.ModelSerializer, BaseOfferSerializer):
     client_info = ClientCreateSerializer(source="client", read_only=True)
-
 
     class Meta:
         model = Offer
